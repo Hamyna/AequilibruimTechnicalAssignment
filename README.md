@@ -1,0 +1,2 @@
+# AequilibruimTechnicalAssignment
+solutions to 
