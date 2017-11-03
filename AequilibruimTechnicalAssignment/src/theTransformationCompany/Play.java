@@ -28,7 +28,8 @@ public class Play  {
 		
 		if(tieInd){ 
 			try {
-				finalize();
+				System.out.println("Game will end due to tie found");
+				finalize(); 
 			} catch (Throwable e) {
 					e.printStackTrace();
 			}  
@@ -41,6 +42,7 @@ public class Play  {
 	        //clear all objects  - destructor? 
 	     } finally {
 	         super.finalize();
+	         System.exit(0); 
 	     }
 	 }
 	
@@ -53,11 +55,11 @@ public class Play  {
 			aBattle = battleService.checkSpeacialRules(aBattle); 
 			if(null == aBattle) {
 				try {
-					finalize();
+					System.out.println("Game will end due to special rules found");
+					finalize();  
 				} catch (Throwable e) {
  					e.printStackTrace();
-				} 
-				break;  //end
+				}  
 			}
 			
 			if(battleService.noWinnerFound(aBattle)) aBattle = battleService.fightByCourageAndStrenght(aBattle); 
@@ -81,20 +83,21 @@ public class Play  {
     	teamDO.setTeamName(teamName);
 
     	System.out.println("Follow instrustion below to input data");
-    	System.out.println("Enter player for team " + teamName); 
-    
+     
 	    	System.out.println("How many players do you have for Team "+teamName);
 	    	int teamSize = inputReader.nextInt();
 	    	System.out.println("Now you would input the property for all players of "+teamName);
+	    	System.out.println("Please note: 'All property is between  1 - 10, if you input a value less than 1 or greater than 10, your property would be defaulted to 1' ");
 
 	    	if(teamSize > 0){ 
 	    		for(int i=1; i<(teamSize+1); i++){ 
 	    			TransformerDO aPlayer = new TransformerDO(); 
 	    			aPlayer.setTeamType(teamType); 
 	    			
-	    			System.out.println("Input a name for player " + i + " in team "+teamName);
+	    			System.out.println(" \n Input a name for player " + i + " in team "+teamName);
 	    			
-	    			String playerName = inputReader.next(); 
+	    			String k = inputReader.nextLine(); 
+	    			String playerName = inputReader.nextLine(); 
 	    			aPlayer.setPlayerName(playerName);
 	    			
 	    			aPlayer.setStrenght(this.inputProperty("strenght", playerName));
@@ -116,10 +119,14 @@ public class Play  {
     }
     
     private int inputProperty(String propertyName, String playerName){ 
-     	System.out.println("Input "+propertyName+" for player "+playerName);
+     	System.out.println(" \n Input "+propertyName+" for player "+playerName);
+    	int propertyValue = inputReader.nextInt(); 
     	
-    	return inputReader.nextInt(); 
+    	if(propertyValue < 1 || propertyValue > 10){ 
+    		return 1; //assumption - set to 1 if number not in range
+    	} 
     	
+    	return propertyValue; 
     }
     
 	public static void main(String[] args) {
