@@ -15,7 +15,7 @@ public class CastleCompany {
 		CastleCompany castleCompany = new CastleCompany(); 
 		Integer numberOfBuildableCastles = castleCompany.calculateBuildableCastles(stretchOfland);
 		
-		System.out.println(numberOfBuildableCastles + " can be built"); 
+		System.out.println(numberOfBuildableCastles + " castles can be built"); 
 	}
 	
 	public Integer calculateBuildableCastles(List<Integer> list) {
