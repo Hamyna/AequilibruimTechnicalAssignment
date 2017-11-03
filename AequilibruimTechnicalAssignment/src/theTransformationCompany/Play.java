@@ -1,16 +1,19 @@
 package theTransformationCompany;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Play  { 
 	
 	public TeamDO autoBotsTeamResult; 
 	public TeamDO deceptionsTeamResult;
-	
+	Scanner inputReader = new Scanner(System.in); 
+
 	BattleServiceImpl battleService = new BattleServiceImpl(); 
 	
 	public void start(TeamDO autoBots, TeamDO deceptions) {  
+		
+    	inputReader.close(); //close input stream 
 		//sort teams 
 		battleService.sortTeamMembersByRank(autoBots.getPlayers()); 
 		battleService.sortTeamMembersByRank(deceptions.getPlayers()); 
@@ -66,65 +69,64 @@ public class Play  {
  		} 
     }
 	
+    private String followInstructions(){ 
+    	return "cant continue without following instructions"; 
+    }
+    
+    private TeamDO getDataFromUser(String teamType){ 
+    	TeamDO teamDO = new TeamDO(); 
+    	
+    	teamDO.setTeamType(teamType.toUpperCase());
+    	String teamName = (teamType.equalsIgnoreCase("A"))? "Autobot" : "Deception"; 
+    	teamDO.setTeamName(teamName);
+
+    	System.out.println("Follow instrustion below to input data");
+    	System.out.println("Enter player for team " + teamName); 
+    
+	    	System.out.println("How many players do you have for Team "+teamName);
+	    	int teamSize = inputReader.nextInt();
+	    	System.out.println("Now you would input the property for all players of "+teamName);
+
+	    	if(teamSize > 0){ 
+	    		for(int i=1; i<(teamSize+1); i++){ 
+	    			TransformerDO aPlayer = new TransformerDO(); 
+	    			aPlayer.setTeamType(teamType); 
+	    			
+	    			System.out.println("Input a name for player " + i + " in team "+teamName);
+	    			
+	    			String playerName = inputReader.next(); 
+	    			aPlayer.setPlayerName(playerName);
+	    			
+	    			aPlayer.setStrenght(this.inputProperty("strenght", playerName));
+	    			aPlayer.setIntelligence(this.inputProperty("intelligence", playerName));
+	    			aPlayer.setSpeed(this.inputProperty("speed", playerName) );
+	    			aPlayer.setEndurance(this.inputProperty("endurance", playerName) );
+	    			aPlayer.setRank(this.inputProperty("rank", playerName) );
+	    			aPlayer.setCourage(this.inputProperty("courage", playerName) );
+	    			aPlayer.setFirePower(this.inputProperty("firePower", playerName) );
+	    			aPlayer.setSkill(this.inputProperty("skill", playerName) );
+	    			
+	    			teamDO.getPlayers().add(aPlayer);
+	    		}
+	    	}else{ 
+	    		followInstructions();
+	    	} 
+	    	
+    	return teamDO; 
+    }
+    
+    private int inputProperty(String propertyName, String playerName){ 
+     	System.out.println("Input "+propertyName+" for player "+playerName);
+    	
+    	return inputReader.nextInt(); 
+    	
+    }
+    
 	public static void main(String[] args) {
-		//input data 
- 		
-		Play transformerGame = new Play();
-		
-		//set autoBots 
-		TeamDO autoBots = new TeamDO(); 
-		//set team type
-		autoBots.setTeamType( TEAM_TYPE_CODE.A.toString() );
-		autoBots.setTeamName("AutoBots"); 
-		List<TransformerDO> autoBotsPlayers = new ArrayList<TransformerDO>(0); 
-		
-		TransformerDO a1 = new TransformerDO(); 
-		a1.setPlayerName("Bluestreak"); 
-		a1.setTeamType(TEAM_TYPE_CODE.A.toString());
-		a1.setStrenght(6);
-		a1.setIntelligence(6);
-		a1.setSpeed(7);
-		a1.setEndurance(9); 
-		a1.setRank(5); 
-		a1.setCourage(2);
-		a1.setFirePower(9);
-		a1.setSkill(7);
-		autoBotsPlayers.add(a1); 
-		
-		TransformerDO a2 = new TransformerDO(); 
- 		a2.setPlayerName("Hubcap"); 
- 		a2.setTeamType(TEAM_TYPE_CODE.A.toString());
- 		a2.setStrenght(4);
- 		a2.setIntelligence(4);
-		a2.setSpeed(4);
-		a2.setEndurance(4); 
-		a2.setRank(4); 
-		a2.setCourage(4);
-		a2.setFirePower(4);
-		a2.setSkill(4);
-		autoBotsPlayers.add(a2);
-		
-		autoBots.setPlayers(autoBotsPlayers);
-		
-		TeamDO deceptions = new TeamDO(); 
-		deceptions.setTeamType( TEAM_TYPE_CODE.D.toString() );
-		deceptions.setTeamName("Deceptions"); 
-		
-		List<TransformerDO> deceptionPlayrs = new ArrayList<TransformerDO>(0); 
-		TransformerDO d1 = new TransformerDO(); 
-		d1.setPlayerName("SoundWave"); 
-		d1.setTeamType(TEAM_TYPE_CODE.D.toString());
-		d1.setStrenght(8);
-		d1.setIntelligence(9);
-		d1.setSpeed(2);
-		d1.setEndurance(6); 
-		d1.setRank(7); 
-		d1.setCourage(5);
-		d1.setFirePower(6);
-		d1.setSkill(10);
-		deceptionPlayrs.add(d1); 
-		
-		deceptions.setPlayers(deceptionPlayrs);
+ 		Play transformerGame = new Play(); 
+
+		TeamDO autoBots =  transformerGame.getDataFromUser("A"); 
+		TeamDO deceptions = transformerGame.getDataFromUser("D"); 
 		
 		transformerGame.start(autoBots, deceptions);
 		

@@ -160,7 +160,7 @@ public class BattleServiceImpl {
 		deceptionsTeam.setNumberOfRivalEliminatedMember(autoBotsLosers); 
 		
 		if(autoBotsTeam.getNumberOfRivalEliminatedMember() > deceptionsTeam.getNumberOfRivalEliminatedMember()) { 
-			System.out.println("Winning Team is - " + autoBotsTeam.getTeamName().toString());
+			System.out.println("Winning team (" + autoBotsTeam.getTeamName().toString() + ") "); 
 			printTeamSurvivors(autoBotsTeam); 
 			
 			System.out.println("Surviving from the losing Team (" + deceptionsTeam.getTeamName() + ")" + " are below");
@@ -169,7 +169,7 @@ public class BattleServiceImpl {
 		}
 		
 		else if(autoBotsTeam.getNumberOfRivalEliminatedMember() < deceptionsTeam.getNumberOfRivalEliminatedMember()) {
-			System.out.println("Winning Team " + deceptionsTeam.getTeamName() ); 
+			System.out.println("Winning Team (" + deceptionsTeam.getTeamName() + ") "); 
 			printTeamSurvivors(deceptionsTeam); 
 			
 			System.out.println("Surviving from the losing Team (" + autoBotsTeam.getTeamName() + ")" + " are below");

@@ -9,7 +9,7 @@ public class TransformerDO extends Object{
 	public static final String STATUS_CODE_PENDING		= "P";
 	
 	private String	teamType;
-	private String playerName; 
+	private String  playerName; 
 	
 	private Integer strenght; 
 	private Integer intelligence; 
